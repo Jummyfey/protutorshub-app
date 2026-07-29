@@ -1,0 +1,1470 @@
+{
+  "assetCount": 211,
+  "files": [
+    {
+      "path": "CODEX-IMPLEMENTATION-PROMPT.md",
+      "bytes": 4370
+    },
+    {
+      "path": "README.md",
+      "bytes": 3515
+    },
+    {
+      "path": "dashboard/composites/choose-week-complete-original.png",
+      "bytes": 372735,
+      "width": 1217,
+      "height": 350,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/composites/full-dashboard-reference.png",
+      "bytes": 1516317,
+      "width": 1672,
+      "height": 941,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/composites/quick-access-footer-complete.png",
+      "bytes": 305468,
+      "width": 1545,
+      "height": 194,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/academic-progress-bar.png",
+      "bytes": 14513,
+      "width": 480,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/academic-progress-card.png",
+      "bytes": 78209,
+      "width": 763,
+      "height": 130,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/brand-crest.png",
+      "bytes": 10724,
+      "width": 77,
+      "height": 73,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/choose-your-week-heading.png",
+      "bytes": 12562,
+      "width": 278,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/current-streak-flame.png",
+      "bytes": 9538,
+      "width": 76,
+      "height": 79,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/faint-footer-crest.png",
+      "bytes": 17838,
+      "width": 146,
+      "height": 102,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/hamburger-button.png",
+      "bytes": 3468,
+      "width": 62,
+      "height": 62,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/header-brand-lockup.png",
+      "bytes": 35665,
+      "width": 351,
+      "height": 73,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/lion-ribbon-motto.png",
+      "bytes": 38308,
+      "width": 326,
+      "height": 67,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/lion-scholar-mascot-original.png",
+      "bytes": 201404,
+      "width": 352,
+      "height": 340,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/next-class-button.png",
+      "bytes": 6063,
+      "width": 113,
+      "height": 56,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/points-star-coin.png",
+      "bytes": 8034,
+      "width": 67,
+      "height": 69,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/previous-class-button.png",
+      "bytes": 8064,
+      "width": 154,
+      "height": 56,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/progress-activities-icon.png",
+      "bytes": 2906,
+      "width": 41,
+      "height": 40,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/progress-donut-55-percent.png",
+      "bytes": 34824,
+      "width": 162,
+      "height": 151,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/progress-lessons-icon.png",
+      "bytes": 2826,
+      "width": 40,
+      "height": 39,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/progress-quizzes-icon.png",
+      "bytes": 2909,
+      "width": 40,
+      "height": 40,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/quick-access-maths-games.png",
+      "bytes": 8094,
+      "width": 71,
+      "height": 66,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/quick-access-practice.png",
+      "bytes": 7123,
+      "width": 67,
+      "height": 67,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/quick-access-quiz.png",
+      "bytes": 9047,
+      "width": 70,
+      "height": 67,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/quick-access-rewards.png",
+      "bytes": 8405,
+      "width": 74,
+      "height": 74,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/quick-access-study-guide.png",
+      "bytes": 8491,
+      "width": 78,
+      "height": 68,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/reward-trophy-medal.png",
+      "bytes": 20835,
+      "width": 110,
+      "height": 119,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/route-star-coin.png",
+      "bytes": 2645,
+      "width": 36,
+      "height": 36,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/sidebar-progress-panel.png",
+      "bytes": 135328,
+      "width": 407,
+      "height": 270,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/sidebar-rewards-panel.png",
+      "bytes": 102416,
+      "width": 407,
+      "height": 216,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/sidebar-streak-panel.png",
+      "bytes": 74236,
+      "width": 407,
+      "height": 200,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-add-subtract.png",
+      "bytes": 3781,
+      "width": 42,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-fractions-percentages.png",
+      "bytes": 2868,
+      "width": 40,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-mid-term-revision.png",
+      "bytes": 2541,
+      "width": 39,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-multiply-divide.png",
+      "bytes": 3429,
+      "width": 35,
+      "height": 41,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-prime-numbers.png",
+      "bytes": 2729,
+      "width": 37,
+      "height": 39,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-ratios.png",
+      "bytes": 2461,
+      "width": 39,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-roman-numerals.png",
+      "bytes": 2789,
+      "width": 35,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/topic-whole-numbers.png",
+      "bytes": 3766,
+      "width": 40,
+      "height": 42,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/view-all-weeks-button.png",
+      "bytes": 13414,
+      "width": 189,
+      "height": 45,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-1.png",
+      "bytes": 4209,
+      "width": 41,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-2.png",
+      "bytes": 4634,
+      "width": 43,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-3.png",
+      "bytes": 4636,
+      "width": 42,
+      "height": 49,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-4.png",
+      "bytes": 4598,
+      "width": 43,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-5.png",
+      "bytes": 4695,
+      "width": 45,
+      "height": 47,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-6.png",
+      "bytes": 4521,
+      "width": 45,
+      "height": 47,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-7.png",
+      "bytes": 4350,
+      "width": 45,
+      "height": 47,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-badge-8.png",
+      "bytes": 4734,
+      "width": 46,
+      "height": 47,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-1.png",
+      "bytes": 28704,
+      "width": 204,
+      "height": 112,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-2.png",
+      "bytes": 23071,
+      "width": 183,
+      "height": 112,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-3.png",
+      "bytes": 33890,
+      "width": 211,
+      "height": 125,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-4.png",
+      "bytes": 29719,
+      "width": 202,
+      "height": 114,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-5.png",
+      "bytes": 26528,
+      "width": 208,
+      "height": 103,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-6.png",
+      "bytes": 25265,
+      "width": 214,
+      "height": 103,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-7.png",
+      "bytes": 23962,
+      "width": 187,
+      "height": 103,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/exact-crops/week-card-8.png",
+      "bytes": 18142,
+      "width": 172,
+      "height": 103,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/academic-progress-bar.png",
+      "bytes": 9134,
+      "width": 476,
+      "height": 14,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/academic-progress-card.png",
+      "bytes": 60476,
+      "width": 719,
+      "height": 80,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/brand-crest.png",
+      "bytes": 9766,
+      "width": 67,
+      "height": 63,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/choose-week-route-only.png",
+      "bytes": 69674,
+      "width": 1216,
+      "height": 194,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/choose-your-week-heading.png",
+      "bytes": 9261,
+      "width": 275,
+      "height": 16,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/current-streak-flame.png",
+      "bytes": 8359,
+      "width": 67,
+      "height": 70,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/faint-footer-crest.png",
+      "bytes": 22298,
+      "width": 146,
+      "height": 102,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/hamburger-button.png",
+      "bytes": 1369,
+      "width": 36,
+      "height": 34,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/header-brand-lockup.png",
+      "bytes": 33808,
+      "width": 339,
+      "height": 63,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/lion-ribbon-motto.png",
+      "bytes": 37022,
+      "width": 302,
+      "height": 67,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/lion-scholar-mascot-original.png",
+      "bytes": 196435,
+      "width": 335,
+      "height": 330,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/next-class-button.png",
+      "bytes": 3401,
+      "width": 83,
+      "height": 19,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/points-star-coin.png",
+      "bytes": 6596,
+      "width": 53,
+      "height": 52,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/previous-class-button.png",
+      "bytes": 4157,
+      "width": 108,
+      "height": 19,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/progress-activities-icon.png",
+      "bytes": 2906,
+      "width": 41,
+      "height": 40,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/progress-donut-55-percent.png",
+      "bytes": 34997,
+      "width": 162,
+      "height": 151,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/progress-lessons-icon.png",
+      "bytes": 2826,
+      "width": 40,
+      "height": 39,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/progress-quizzes-icon.png",
+      "bytes": 2909,
+      "width": 40,
+      "height": 40,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/quick-access-maths-games.png",
+      "bytes": 3080,
+      "width": 57,
+      "height": 38,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/quick-access-practice.png",
+      "bytes": 2259,
+      "width": 44,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/quick-access-quiz.png",
+      "bytes": 4079,
+      "width": 49,
+      "height": 48,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/quick-access-rewards.png",
+      "bytes": 2782,
+      "width": 35,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/quick-access-study-guide.png",
+      "bytes": 3367,
+      "width": 57,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/reward-trophy-medal.png",
+      "bytes": 15904,
+      "width": 92,
+      "height": 102,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/route-star-coin.png",
+      "bytes": 2299,
+      "width": 36,
+      "height": 26,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/sidebar-progress-panel.png",
+      "bytes": 134220,
+      "width": 405,
+      "height": 267,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/sidebar-rewards-panel.png",
+      "bytes": 101901,
+      "width": 406,
+      "height": 215,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/sidebar-streak-panel.png",
+      "bytes": 60240,
+      "width": 346,
+      "height": 158,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-add-subtract.png",
+      "bytes": 3404,
+      "width": 38,
+      "height": 40,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-fractions-percentages.png",
+      "bytes": 2315,
+      "width": 31,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-mid-term-revision.png",
+      "bytes": 1868,
+      "width": 26,
+      "height": 34,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-multiply-divide.png",
+      "bytes": 3383,
+      "width": 35,
+      "height": 39,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-prime-numbers.png",
+      "bytes": 2342,
+      "width": 32,
+      "height": 33,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-ratios.png",
+      "bytes": 1891,
+      "width": 27,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-roman-numerals.png",
+      "bytes": 2449,
+      "width": 31,
+      "height": 38,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/topic-whole-numbers.png",
+      "bytes": 3269,
+      "width": 34,
+      "height": 36,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/view-all-weeks-button.png",
+      "bytes": 12786,
+      "width": 186,
+      "height": 42,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-1.png",
+      "bytes": 4034,
+      "width": 40,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-2.png",
+      "bytes": 4618,
+      "width": 42,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-3.png",
+      "bytes": 4495,
+      "width": 42,
+      "height": 45,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-4.png",
+      "bytes": 4557,
+      "width": 43,
+      "height": 45,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-5.png",
+      "bytes": 4513,
+      "width": 44,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-6.png",
+      "bytes": 4324,
+      "width": 44,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-7.png",
+      "bytes": 4205,
+      "width": 45,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-badge-8.png",
+      "bytes": 4484,
+      "width": 44,
+      "height": 43,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-1.png",
+      "bytes": 27691,
+      "width": 204,
+      "height": 102,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-2.png",
+      "bytes": 22336,
+      "width": 183,
+      "height": 104,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-3.png",
+      "bytes": 32806,
+      "width": 211,
+      "height": 115,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-4.png",
+      "bytes": 28680,
+      "width": 202,
+      "height": 104,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-5.png",
+      "bytes": 25045,
+      "width": 206,
+      "height": 92,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-6.png",
+      "bytes": 24077,
+      "width": 214,
+      "height": 91,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-7.png",
+      "bytes": 22852,
+      "width": 187,
+      "height": 91,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard/transparent-png/week-card-8.png",
+      "bytes": 17069,
+      "width": 172,
+      "height": 91,
+      "mode": "RGBA"
+    },
+    {
+      "path": "dashboard-assets-preview.png",
+      "bytes": 186035,
+      "width": 1360,
+      "height": 1225,
+      "mode": "RGB"
+    },
+    {
+      "path": "design-tokens.json",
+      "bytes": 1104
+    },
+    {
+      "path": "implementation-map.json",
+      "bytes": 4564
+    },
+    {
+      "path": "shared/brand-crest.png",
+      "bytes": 9006,
+      "width": 65,
+      "height": 62,
+      "mode": "RGBA"
+    },
+    {
+      "path": "shared/header-brand-lockup.png",
+      "bytes": 32191,
+      "width": 334,
+      "height": 62,
+      "mode": "RGBA"
+    },
+    {
+      "path": "shared/lion-scholar-dashboard-enhanced.png",
+      "bytes": 1411182,
+      "width": 1051,
+      "height": 1030,
+      "mode": "RGBA"
+    },
+    {
+      "path": "shared/lion-scholar-dashboard-original.png",
+      "bytes": 196435,
+      "width": 335,
+      "height": 330,
+      "mode": "RGBA"
+    },
+    {
+      "path": "shared/lion-scholar-week1-enhanced.png",
+      "bytes": 979199,
+      "width": 888,
+      "height": 848,
+      "mode": "RGBA"
+    },
+    {
+      "path": "shared/lion-scholar-week1-original.png",
+      "bytes": 153950,
+      "width": 289,
+      "height": 280,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/composites/full-page-reference.png",
+      "bytes": 1586554,
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/composites/learning-journey-complete-original.png",
+      "bytes": 377721,
+      "width": 1051,
+      "height": 331,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/activity-maths-game.png",
+      "bytes": 14654,
+      "width": 88,
+      "height": 96,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/activity-practice.png",
+      "bytes": 14068,
+      "width": 88,
+      "height": 96,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/activity-quick-quiz.png",
+      "bytes": 15977,
+      "width": 87,
+      "height": 96,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/activity-study-guide.png",
+      "bytes": 14510,
+      "width": 88,
+      "height": 96,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/activity-week-challenge.png",
+      "bytes": 14970,
+      "width": 89,
+      "height": 96,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/back-to-weeks-grid-icon.png",
+      "bytes": 2020,
+      "width": 36,
+      "height": 38,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/bottom-gold-curve.png",
+      "bytes": 92455,
+      "width": 1385,
+      "height": 83,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/brand-crest.png",
+      "bytes": 10421,
+      "width": 81,
+      "height": 72,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/card-maths-game.png",
+      "bytes": 57083,
+      "width": 175,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/card-practice.png",
+      "bytes": 55436,
+      "width": 178,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/card-quick-quiz.png",
+      "bytes": 57873,
+      "width": 178,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/card-study-guide.png",
+      "bytes": 59534,
+      "width": 181,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/card-week-challenge.png",
+      "bytes": 60958,
+      "width": 176,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/current-streak-flame.png",
+      "bytes": 7547,
+      "width": 71,
+      "height": 69,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/faint-crest-watermark-footer.png",
+      "bytes": 14025,
+      "width": 139,
+      "height": 100,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/faint-crest-watermark-objectives.png",
+      "bytes": 17373,
+      "width": 149,
+      "height": 134,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/gold-star-rail-node.png",
+      "bytes": 2563,
+      "width": 35,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/hamburger-button.png",
+      "bytes": 3328,
+      "width": 60,
+      "height": 61,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/header-brand-lockup.png",
+      "bytes": 34879,
+      "width": 350,
+      "height": 72,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/help-headset.png",
+      "bytes": 5958,
+      "width": 70,
+      "height": 65,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/learning-objectives-target.png",
+      "bytes": 4020,
+      "width": 39,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/lion-ribbon-motto.png",
+      "bytes": 25851,
+      "width": 275,
+      "height": 50,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/lion-scholar-mascot-original.png",
+      "bytes": 160202,
+      "width": 302,
+      "height": 296,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/next-button.png",
+      "bytes": 5699,
+      "width": 110,
+      "height": 58,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/number-shield-1.png",
+      "bytes": 3985,
+      "width": 40,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/number-shield-2.png",
+      "bytes": 4392,
+      "width": 42,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/number-shield-3.png",
+      "bytes": 4333,
+      "width": 42,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/number-shield-4.png",
+      "bytes": 4177,
+      "width": 41,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/number-shield-5.png",
+      "bytes": 4383,
+      "width": 43,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/objective-check-circle.png",
+      "bytes": 1535,
+      "width": 27,
+      "height": 30,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/previous-button.png",
+      "bytes": 7617,
+      "width": 128,
+      "height": 58,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/progress-donut-15-percent.png",
+      "bytes": 22142,
+      "width": 135,
+      "height": 129,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-connection-strip.png",
+      "bytes": 95144,
+      "width": 1027,
+      "height": 100,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-counting-fruits.png",
+      "bytes": 3762,
+      "width": 51,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-counting-pencils.png",
+      "bytes": 3685,
+      "width": 54,
+      "height": 55,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-counting-people.png",
+      "bytes": 4754,
+      "width": 66,
+      "height": 55,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-counting-steps.png",
+      "bytes": 3988,
+      "width": 52,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-counting-toys.png",
+      "bytes": 4441,
+      "width": 50,
+      "height": 55,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/real-life-lightbulb.png",
+      "bytes": 3257,
+      "width": 41,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/reward-star-coin.png",
+      "bytes": 8916,
+      "width": 69,
+      "height": 70,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/sidebar-help-panel.png",
+      "bytes": 48584,
+      "width": 376,
+      "height": 151,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/sidebar-progress-panel.png",
+      "bytes": 93173,
+      "width": 376,
+      "height": 250,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/sidebar-rewards-panel.png",
+      "bytes": 66228,
+      "width": 376,
+      "height": 194,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/exact-crops/sidebar-streak-panel.png",
+      "bytes": 70258,
+      "width": 376,
+      "height": 173,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/activity-maths-game.png",
+      "bytes": 13588,
+      "width": 84,
+      "height": 84,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/activity-practice.png",
+      "bytes": 12786,
+      "width": 81,
+      "height": 84,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/activity-quick-quiz.png",
+      "bytes": 14785,
+      "width": 83,
+      "height": 84,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/activity-study-guide.png",
+      "bytes": 13417,
+      "width": 84,
+      "height": 84,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/activity-week-challenge.png",
+      "bytes": 13630,
+      "width": 82,
+      "height": 84,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/back-to-weeks-grid-icon.png",
+      "bytes": 1183,
+      "width": 21,
+      "height": 20,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/bottom-gold-curve.png",
+      "bytes": 89882,
+      "width": 1385,
+      "height": 80,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/brand-crest.png",
+      "bytes": 9006,
+      "width": 65,
+      "height": 62,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/card-maths-game.png",
+      "bytes": 50836,
+      "width": 157,
+      "height": 239,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/card-practice.png",
+      "bytes": 52252,
+      "width": 163,
+      "height": 255,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/card-quick-quiz.png",
+      "bytes": 51932,
+      "width": 154,
+      "height": 249,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/card-study-guide.png",
+      "bytes": 54762,
+      "width": 159,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/card-week-challenge.png",
+      "bytes": 61289,
+      "width": 176,
+      "height": 258,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/current-streak-flame.png",
+      "bytes": 6282,
+      "width": 58,
+      "height": 58,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/faint-crest-watermark-footer.png",
+      "bytes": 17923,
+      "width": 139,
+      "height": 100,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/faint-crest-watermark-objectives.png",
+      "bytes": 23077,
+      "width": 149,
+      "height": 134,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/gold-star-rail-node.png",
+      "bytes": 2425,
+      "width": 35,
+      "height": 30,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/hamburger-button.png",
+      "bytes": 2748,
+      "width": 53,
+      "height": 55,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/header-brand-lockup.png",
+      "bytes": 32191,
+      "width": 334,
+      "height": 62,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/help-headset.png",
+      "bytes": 4185,
+      "width": 46,
+      "height": 47,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/learning-objectives-target.png",
+      "bytes": 3552,
+      "width": 36,
+      "height": 36,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/learning-rail-only.png",
+      "bytes": 96341,
+      "width": 1053,
+      "height": 332,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/lion-ribbon-motto.png",
+      "bytes": 25502,
+      "width": 268,
+      "height": 50,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/lion-scholar-mascot-original.png",
+      "bytes": 153950,
+      "width": 289,
+      "height": 280,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/next-button.png",
+      "bytes": 5211,
+      "width": 105,
+      "height": 53,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/number-shield-1.png",
+      "bytes": 3649,
+      "width": 35,
+      "height": 51,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/number-shield-2.png",
+      "bytes": 4015,
+      "width": 40,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/number-shield-3.png",
+      "bytes": 3593,
+      "width": 35,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/number-shield-4.png",
+      "bytes": 3543,
+      "width": 35,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/number-shield-5.png",
+      "bytes": 4142,
+      "width": 43,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/objective-check-circle.png",
+      "bytes": 913,
+      "width": 16,
+      "height": 16,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/previous-button.png",
+      "bytes": 6954,
+      "width": 122,
+      "height": 54,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/progress-donut-15-percent.png",
+      "bytes": 20524,
+      "width": 123,
+      "height": 124,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-connection-strip.png",
+      "bytes": 80861,
+      "width": 962,
+      "height": 80,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-counting-fruits.png",
+      "bytes": 2581,
+      "width": 34,
+      "height": 37,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-counting-pencils.png",
+      "bytes": 2705,
+      "width": 36,
+      "height": 46,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-counting-people.png",
+      "bytes": 3644,
+      "width": 49,
+      "height": 44,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-counting-steps.png",
+      "bytes": 2879,
+      "width": 40,
+      "height": 35,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-counting-toys.png",
+      "bytes": 3173,
+      "width": 33,
+      "height": 37,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/real-life-lightbulb.png",
+      "bytes": 2232,
+      "width": 25,
+      "height": 37,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/reward-star-coin.png",
+      "bytes": 7822,
+      "width": 59,
+      "height": 61,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/sidebar-help-panel.png",
+      "bytes": 38168,
+      "width": 336,
+      "height": 116,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/sidebar-progress-panel.png",
+      "bytes": 77695,
+      "width": 334,
+      "height": 208,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/sidebar-rewards-panel.png",
+      "bytes": 54003,
+      "width": 339,
+      "height": 158,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1/transparent-png/sidebar-streak-panel.png",
+      "bytes": 57931,
+      "width": 320,
+      "height": 143,
+      "mode": "RGBA"
+    },
+    {
+      "path": "week1-assets-preview.png",
+      "bytes": 206426,
+      "width": 1360,
+      "height": 1225,
+      "mode": "RGB"
+    }
+  ]
+}

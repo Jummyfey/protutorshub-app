@@ -1,0 +1,37 @@
+{
+  "name": "Pro Tutors Hub",
+  "short_name": "Pro Tutors",
+  "description": "Primary Mathematics learning, practice, games, progress tracking and school dashboards.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#35145f",
+  "theme_color": "#35145f",
+  "icons": [
+    {
+      "src": "/app-icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

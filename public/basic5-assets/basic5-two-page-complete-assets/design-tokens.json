@@ -1,0 +1,35 @@
+{
+  "name": "Pro Tutors Hub Basic 5",
+  "pages": {
+    "dashboard": {
+      "width": 1672,
+      "height": 941
+    },
+    "week1": {
+      "width": 1536,
+      "height": 1024
+    }
+  },
+  "palette": {
+    "pageWhite": "#FFFFFF",
+    "royalPurple": "#3B075B",
+    "deepPurple": "#29053E",
+    "purpleHighlight": "#71318E",
+    "metallicGold": "#E5A00B",
+    "brightGold": "#F2B630",
+    "softGoldBorder": "#E8B54E",
+    "softPanelBorder": "#ECE6EA",
+    "bodyText": "#342C3A"
+  },
+  "typography": {
+    "displayStyle": "Elegant high-contrast serif",
+    "interfaceStyle": "Readable serif/sans-serif combination",
+    "instruction": "Keep all text live; do not rasterise headings or controls."
+  },
+  "implementation": {
+    "icons": "Use transparent PNG assets at intrinsic aspect ratio.",
+    "cards": "Recreate with CSS using white surfaces, subtle grey borders, soft shadows and rounded corners.",
+    "buttons": "Recreate with deep-purple fills, warm-gold outlines and gold arrow icons.",
+    "progressRings": "Prefer CSS/SVG for dynamic values; supplied PNG rings are exact visual references."
+  }
+}

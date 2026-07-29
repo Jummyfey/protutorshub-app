@@ -1,0 +1,9 @@
+Use the supplied Basic 6 asset pack to implement the two reference pages exactly.
+
+Do not redraw the supplied assets with CSS, emoji, Unicode characters or generic icons. Use the PNG assets at their natural aspect ratios with object-fit: contain. Build the responsive structure, text, cards, buttons, progress indicators and live values in React/CSS.
+
+For the dashboard, use backgrounds/dashboard-milestone-route-13-positions.png behind exactly 13 week cards: Weeks 1–7 on the upper route and Weeks 8–13 on the lower route. Place decorations/end-of-term-flag.png in the reserved finish space immediately beside Week 13. The flag must never overlap Week 7 or any milestone card.
+
+For the weekly lesson page, use backgrounds/lesson-mountain-gold-path.png as the central scenic background and place mascots/eagle-lesson-flag.png at the summit. Overlay the five numbered learning actions and their cards using the supplied icons. Keep all text and controls as accessible HTML.
+
+Use only white, ivory, royal purple, violet and warm metallic gold. Do not use blue. Prevent all overlaps at desktop, tablet and mobile widths.

@@ -1,0 +1,244 @@
+.or-game {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #8bd8ff;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.or-three-canvas {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+}
+
+.or-track-hud {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  pointer-events: none;
+}
+
+.or-track-hud > * {
+  pointer-events: auto;
+}
+
+.or-track-hud div,
+.or-hud-button {
+  display: grid;
+  min-height: 48px;
+  align-content: center;
+  gap: 2px;
+  padding: 8px 14px;
+  border: 2px solid rgba(255,255,255,0.42);
+  border-radius: 14px;
+  background: rgba(13, 47, 67, 0.72);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2), inset 0 1px rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+}
+
+.or-track-hud span {
+  color: #c7f9ff;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.or-track-hud strong {
+  color: #ffd95d;
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(92, 52, 12, 0.55);
+}
+
+.or-hud-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 999px;
+  border-color: rgba(255,255,255,0.45);
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.or-hud-button.active {
+  background: rgba(102, 51, 153, 0.82);
+  color: #ffd95d;
+}
+
+.or-runner-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  z-index: 11;
+  display: flex;
+  gap: 14px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.or-character-warning {
+  position: absolute;
+  left: 50%;
+  top: 82px;
+  z-index: 12;
+  width: min(560px, calc(100% - 24px));
+  padding: 9px 14px;
+  border: 1px solid rgba(255, 217, 93, 0.58);
+  border-radius: 999px;
+  background: rgba(44, 25, 8, 0.68);
+  color: #fff4bd;
+  font-size: 13px;
+  font-weight: 900;
+  text-align: center;
+  transform: translateX(-50%);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.or-runner-controls button {
+  display: grid;
+  width: 82px;
+  height: 82px;
+  place-items: center;
+  border: 3px solid rgba(255,255,255,0.52);
+  border-radius: 50%;
+  background: rgba(14, 50, 58, 0.56);
+  color: #ffffff;
+  box-shadow: 0 16px 32px rgba(0,0,0,0.2), inset 0 2px rgba(255,255,255,0.22);
+  cursor: pointer;
+  pointer-events: auto;
+  backdrop-filter: blur(9px);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.or-runner-controls button:active {
+  transform: scale(0.94);
+}
+
+.or-track-menu {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(31, 16, 73, 0.14), rgba(31, 16, 73, 0.42));
+  backdrop-filter: blur(2px);
+}
+
+.or-track-menu div {
+  width: min(620px, 100%);
+  padding: 28px;
+  border: 2px solid rgba(255,255,255,0.35);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(35, 23, 78, 0.9), rgba(18, 53, 48, 0.86));
+  box-shadow: 0 28px 70px rgba(0,0,0,0.32), inset 0 1px rgba(255,255,255,0.2);
+  text-align: center;
+}
+
+.or-track-menu span {
+  color: #ffd95d;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.or-track-menu h1 {
+  margin: 10px 0;
+  color: #ffffff;
+  font-size: clamp(36px, 8vw, 72px);
+  line-height: 0.95;
+}
+
+.or-track-menu p {
+  color: rgba(255,255,255,0.86);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.or-track-menu button {
+  display: inline-flex;
+  min-height: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 12px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(#ffd95d, #f0aa19);
+  color: #27133f;
+  font: inherit;
+  font-weight: 950;
+  cursor: pointer;
+  box-shadow: 0 16px 32px rgba(240, 170, 25, 0.3), inset 0 2px rgba(255,255,255,0.32);
+}
+
+@media (max-width: 760px) {
+  .or-track-hud {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    gap: 7px;
+  }
+
+  .or-track-hud div,
+  .or-hud-button {
+    min-height: 40px;
+    padding: 6px 10px;
+    border-radius: 12px;
+  }
+
+  .or-track-hud span {
+    font-size: 8px;
+  }
+
+  .or-track-hud strong {
+    font-size: 14px;
+  }
+
+  .or-runner-controls {
+    bottom: 14px;
+  }
+
+  .or-runner-controls button {
+    width: 68px;
+    height: 68px;
+  }
+}
+
+@media (max-width: 480px) {
+  .or-track-hud div:nth-of-type(2),
+  .or-track-hud div:nth-of-type(3) {
+    display: none;
+  }
+
+  .or-track-menu div {
+    padding: 20px;
+  }
+
+  .or-runner-controls button {
+    width: 60px;
+    height: 60px;
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "dashboardCanvas": {
+    "width": 1672,
+    "height": 941
+  },
+  "week1Canvas": {
+    "width": 1536,
+    "height": 1024
+  },
+  "dashboardCropCoordinates": {
+    "brand-crest": [
+      128,
+      8,
+      205,
+      81
+    ],
+    "header-brand-lockup": [
+      126,
+      8,
+      477,
+      81
+    ],
+    "hamburger-button": [
+      42,
+      16,
+      104,
+      78
+    ],
+    "previous-class-button": [
+      1193,
+      19,
+      1347,
+      75
+    ],
+    "next-class-button": [
+      1535,
+      19,
+      1648,
+      75
+    ],
+    "lion-scholar-mascot-original": [
+      846,
+      76,
+      1198,
+      416
+    ],
+    "lion-ribbon-motto": [
+      857,
+      350,
+      1183,
+      417
+    ],
+    "academic-progress-card": [
+      61,
+      263,
+      824,
+      393
+    ],
+    "points-star-coin": [
+      669,
+      298,
+      736,
+      367
+    ],
+    "academic-progress-bar": [
+      82,
+      313,
+      562,
+      348
+    ],
+    "choose-your-week-heading": [
+      48,
+      409,
+      326,
+      444
+    ],
+    "route-star-coin": [
+      36,
+      510,
+      72,
+      546
+    ],
+    "view-all-weeks-button": [
+      556,
+      701,
+      745,
+      746
+    ],
+    "week-badge-1": [
+      59,
+      459,
+      100,
+      505
+    ],
+    "week-badge-2": [
+      355,
+      459,
+      398,
+      505
+    ],
+    "week-badge-3": [
+      660,
+      446,
+      702,
+      495
+    ],
+    "week-badge-4": [
+      948,
+      459,
+      991,
+      505
+    ],
+    "week-badge-5": [
+      105,
+      590,
+      150,
+      637
+    ],
+    "week-badge-6": [
+      410,
+      590,
+      455,
+      637
+    ],
+    "week-badge-7": [
+      701,
+      590,
+      746,
+      637
+    ],
+    "week-badge-8": [
+      965,
+      590,
+      1011,
+      637
+    ],
+    "topic-whole-numbers": [
+      98,
+      492,
+      138,
+      534
+    ],
+    "topic-roman-numerals": [
+      396,
+      492,
+      431,
+      535
+    ],
+    "topic-add-subtract": [
+      697,
+      488,
+      739,
+      532
+    ],
+    "topic-multiply-divide": [
+      990,
+      493,
+      1025,
+      534
+    ],
+    "topic-prime-numbers": [
+      143,
+      622,
+      180,
+      661
+    ],
+    "topic-fractions-percentages": [
+      449,
+      620,
+      489,
+      663
+    ],
+    "topic-mid-term-revision": [
+      743,
+      620,
+      782,
+      664
+    ],
+    "topic-ratios": [
+      1009,
+      621,
+      1048,
+      664
+    ],
+    "week-card-1": [
+      58,
+      454,
+      262,
+      566
+    ],
+    "week-card-2": [
+      349,
+      454,
+      532,
+      566
+    ],
+    "week-card-3": [
+      657,
+      443,
+      868,
+      568
+    ],
+    "week-card-4": [
+      948,
+      454,
+      1150,
+      568
+    ],
+    "week-card-5": [
+      104,
+      588,
+      312,
+      691
+    ],
+    "week-card-6": [
+      406,
+      588,
+      620,
+      691
+    ],
+    "week-card-7": [
+      699,
+      588,
+      886,
+      691
+    ],
+    "week-card-8": [
+      958,
+      588,
+      1130,
+      691
+    ],
+    "quick-access-study-guide": [
+      118,
+      816,
+      196,
+      884
+    ],
+    "quick-access-practice": [
+      361,
+      817,
+      428,
+      884
+    ],
+    "quick-access-maths-games": [
+      585,
+      816,
+      656,
+      882
+    ],
+    "quick-access-quiz": [
+      810,
+      817,
+      880,
+      884
+    ],
+    "quick-access-rewards": [
+      998,
+      816,
+      1072,
+      890
+    ],
+    "progress-donut-55-percent": [
+      1264,
+      171,
+      1426,
+      322
+    ],
+    "progress-lessons-icon": [
+      1448,
+      199,
+      1488,
+      238
+    ],
+    "progress-quizzes-icon": [
+      1448,
+      257,
+      1488,
+      297
+    ],
+    "progress-activities-icon": [
+      1447,
+      318,
+      1488,
+      358
+    ],
+    "current-streak-flame": [
+      1246,
+      415,
+      1322,
+      494
+    ],
+    "reward-trophy-medal": [
+      1245,
+      638,
+      1355,
+      757
+    ],
+    "sidebar-progress-panel": [
+      1235,
+      116,
+      1642,
+      386
+    ],
+    "sidebar-streak-panel": [
+      1235,
+      402,
+      1642,
+      602
+    ],
+    "sidebar-rewards-panel": [
+      1235,
+      615,
+      1642,
+      831
+    ],
+    "faint-footer-crest": [
+      1507,
+      833,
+      1653,
+      935
+    ]
+  },
+  "recommendedCompositeAssets": {
+    "dashboardWeekRoute": "dashboard/transparent-png/choose-week-route-only.png",
+    "dashboardFooter": "dashboard/composites/quick-access-footer-complete.png",
+    "week1LearningRail": "week1/transparent-png/learning-rail-only.png",
+    "week1LearningSection": "week1/composites/learning-journey-complete-original.png"
+  }
+}

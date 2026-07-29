@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.track-setup-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 24% 16%, rgba(255, 200, 61, 0.18), transparent 28%),
+    radial-gradient(circle at 86% 10%, rgba(124, 35, 155, 0.13), transparent 30%),
+    linear-gradient(135deg, #ffffff 0%, #fffaf0 54%, #fbf3ff 100%);
+  color: #2b0644;
+}
+
+.track-setup-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 14px;
+  padding: 12px 18px 18px;
+  min-height: calc(100vh - 86px);
+}
+
+.track-setup-viewer {
+  min-height: calc(100vh - 112px);
+  border: 1px solid rgba(75, 11, 115, 0.16);
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fffaf0;
+  box-shadow: 0 20px 50px rgba(75, 11, 115, 0.12);
+}
+
+.track-setup-canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.track-setup-panel {
+  display: grid;
+  align-content: start;
+  gap: 9px;
+  max-height: calc(100vh - 112px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid rgba(75, 11, 115, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+}
+
+.track-setup-panel h1 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.track-setup-panel p {
+  margin: 0 0 4px;
+  color: #6a4b7a;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.track-setup-panel strong {
+  margin-top: 5px;
+  color: #4b0b73;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.track-setup-panel button,
+.track-setup-panel input,
+.track-setup-panel textarea {
+  width: 100%;
+  border: 1px solid rgba(75, 11, 115, 0.18);
+  border-radius: 6px;
+  background: #fffaf0;
+  color: #2b0644;
+  font: inherit;
+}
+
+.track-setup-panel button {
+  min-height: 34px;
+  padding: 7px 9px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.track-setup-panel button:hover,
+.track-setup-panel button.active {
+  border-color: #ffc83d;
+  background: #ffc83d;
+  color: #2b0644;
+}
+
+.track-setup-panel input,
+.track-setup-panel textarea {
+  padding: 7px 8px;
+  font-size: 12px;
+}
+
+.track-setup-panel textarea {
+  min-height: 62px;
+  resize: vertical;
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.segmented-control:has(> button:nth-child(3)) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.editor-status,
+.track-setup-message,
+.track-setup-counts {
+  display: block;
+  border-radius: 6px;
+  padding: 8px 9px;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.editor-status {
+  border: 1px solid rgba(75, 11, 115, 0.14);
+  color: #5a336d;
+  background: rgba(255, 250, 240, 0.86);
+}
+
+.editor-status.active {
+  border-color: #4ade80;
+  color: #052e16;
+  background: #86efac;
+  font-weight: 800;
+}
+
+.track-setup-message {
+  border: 1px solid rgba(228, 154, 22, 0.34);
+  color: #4b0b73;
+  background: rgba(255, 200, 61, 0.18);
+}
+
+.track-setup-counts {
+  color: #4b0b73;
+  background: rgba(255, 250, 240, 0.88);
+}
+
+.editor-car-controls {
+  display: grid;
+  gap: 7px;
+  padding: 10px;
+  border: 1px solid rgba(75, 11, 115, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.editor-car-controls label {
+  display: grid;
+  gap: 4px;
+  color: #4b0b73;
+  font-size: 12px;
+}
+
+@media (max-width: 980px) {
+  .track-setup-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .track-setup-viewer {
+    min-height: 62vh;
+  }
+
+  .track-setup-panel {
+    max-height: none;
+  }
+}

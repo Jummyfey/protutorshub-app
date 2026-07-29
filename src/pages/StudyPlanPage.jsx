@@ -1,0 +1,1019 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import LockedFeatureCard from "../components/LockedFeatureCard";
+import NeedTutorCard from "../components/NeedTutorCard";
+import {
+  beginTrackedStudySession,
+  getOrCreateParentDashboardInvite,
+  loadParentTimetableForChild,
+  loadParentNotificationPreferences,
+  trackChildActivityEvent,
+} from "../services/parentMonitoring";
+import {
+  loadParentScheduleFromBackend,
+  loadStudyPlanFromBackend,
+  syncStudyPlanToBackend,
+} from "../services/backendSync";
+import {
+  calculateStatistics,
+  getWeakestTopics,
+  TOPIC_NAMES,
+} from "../utils/resultsStorage";
+import {
+  generateAutoStudyPlan,
+  getEliteParentInsights,
+  getParentSchedule,
+  getStudyGuideProgress,
+  getStudyPlan,
+  getStudyPlanAccess,
+  saveStudyPlan,
+  WEEK_DAYS,
+} from "../utils/studyPlanStorage";
+
+const DURATION_OPTIONS = [
+  { label: "30 mins", value: 30 },
+  { label: "45 mins", value: 45 },
+  { label: "1 hour", value: 60 },
+  { label: "2 hours", value: 120 },
+];
+
+const REMINDER_LEAD_OPTIONS = [
+  { label: "At start time", value: 0 },
+  { label: "5 mins before", value: 5 },
+  { label: "10 mins before", value: 10 },
+  { label: "15 mins before", value: 15 },
+  { label: "30 mins before", value: 30 },
+  { label: "1 hour before", value: 60 },
+];
+
+const readinessLabel = (score) => {
+  if (score >= 80) return "High readiness";
+  if (score >= 65) return "Strong readiness";
+  if (score >= 45) return "Developing readiness";
+  return "Foundation building";
+};
+
+const getCurrentWeekDay = () => new Date().toLocaleDateString("en-US", { weekday: "long" });
+
+const formatTopicList = (topics = []) => {
+  if (!topics.length) return "Balanced topic study";
+  if (topics.length === 1) return topics[0];
+  return `${topics.slice(0, -1).join(", ")} and ${topics[topics.length - 1]}`;
+};
+
+const buildScheduleForDays = (days, existingSchedule = [], defaults = {}) =>
+  days.map((day, index) => {
+    const existing = existingSchedule.find((entry) => entry.day === day);
+
+    return {
+      day,
+      topics: existing?.topics?.length ? existing.topics : [TOPIC_NAMES[index % TOPIC_NAMES.length]],
+      duration: Number(existing?.duration || defaults.dailyMinutes || 45),
+      preferredStartTime: existing?.preferredStartTime || defaults.preferredStartTime || "17:00",
+      reminderLeadMinutes: Number(existing?.reminderLeadMinutes ?? defaults.reminderLeadMinutes ?? 5),
+      reminderEnabled:
+        typeof existing?.reminderEnabled === "boolean"
+          ? existing.reminderEnabled
+          : Boolean(defaults.reminderEnabled),
+    };
+  });
+
+const getScheduleEntry = (schedule = [], day, defaults = {}) =>
+  buildScheduleForDays([day], schedule, defaults)[0];
+
+const convertParentTimetableToPlan = (currentPlan, parentTimetable) => {
+  const enabledRows = (parentTimetable?.timetable || []).filter((row) => row.enabled !== false);
+  if (!enabledRows.length) return currentPlan;
+
+  const reminderLeadMinutes = Number(parentTimetable.reminderMinutes) || currentPlan.reminderLeadMinutes || 5;
+  const dayTopicSchedule = enabledRows.map((row) => ({
+    day: row.day,
+    topics: row.topics?.length ? row.topics : [],
+    duration: Number(row.duration || currentPlan.dailyMinutes || 45),
+    preferredStartTime: row.startTime || row.preferredStartTime || currentPlan.preferredStartTime || "17:00",
+    reminderEnabled: true,
+    reminderLeadMinutes,
+  }));
+
+  return {
+    ...currentPlan,
+    studyDays: enabledRows.map((row) => row.day),
+    dailyMinutes: Number(enabledRows[0]?.duration || currentPlan.dailyMinutes || 45),
+    preferredStartTime: enabledRows[0]?.startTime || currentPlan.preferredStartTime || "17:00",
+    reminderEnabled: true,
+    reminderLeadMinutes,
+    dayTopicSchedule,
+    customized: true,
+    parentControlled: true,
+    parentLocked: Boolean(parentTimetable.locked),
+    updatedAt: parentTimetable.updatedAt || currentPlan.updatedAt,
+  };
+};
+
+export default function StudyPlanPage({
+  HeaderComponent,
+  attempts,
+  syllabusTopics = [],
+  userPackage,
+  studentSession,
+  onBack,
+  onPrevious,
+  onNext,
+  onStudyGuide,
+  onPracticeTopic,
+  onStartMock,
+  onReviewResults,
+  onTutorHelp,
+}) {
+  const [plan, setPlan] = useState(() => getStudyPlan());
+  const [isEditingPlan, setIsEditingPlan] = useState(() => !getStudyPlan().customized);
+  const [parentSchedule, setParentSchedule] = useState(() => getParentSchedule());
+  const [parentNotificationPreferences, setParentNotificationPreferences] = useState(null);
+  const [parentInvite, setParentInvite] = useState(null);
+  const [parentPlanLock, setParentPlanLock] = useState(false);
+  const [isEditorPageOpen, setIsEditorPageOpen] = useState(false);
+  const [openSections, setOpenSections] = useState(() => new Set());
+  const access = getStudyPlanAccess(userPackage);
+  const statistics = useMemo(() => calculateStatistics(attempts), [attempts]);
+  const autoGeneratedPlan = useMemo(
+    () => generateAutoStudyPlan(attempts, statistics, userPackage, plan),
+    [attempts, statistics, userPackage, plan]
+  );
+  const weakTopics = getWeakestTopics(3, attempts);
+  const currentWeekDay = getCurrentWeekDay();
+  const todayPlan =
+    autoGeneratedPlan.find((item) => item.day === currentWeekDay) || autoGeneratedPlan[0];
+  const [studyReminder, setStudyReminder] = useState(null);
+  const reminderAlertedRef = useRef("");
+  const studyGuideProgress = getStudyGuideProgress();
+  const syllabusLessonKeys = syllabusTopics.flatMap((topic) =>
+    topic.lessons.map((lesson) => `${topic.title}::${lesson}`)
+  );
+  const totalSyllabusLessons = syllabusLessonKeys.length || TOPIC_NAMES.length;
+  const studiedLessonKeys = new Set(studyGuideProgress.studiedLessons);
+  const practisedLessonKeys = new Set(
+    attempts
+      .filter((attempt) => attempt.testType === "Practice Test")
+      .map((attempt) => attempt.topic && attempt.lesson ? `${attempt.topic}::${attempt.lesson}` : "")
+      .filter(Boolean)
+  );
+  const studiedLessonCount = syllabusLessonKeys.length
+    ? syllabusLessonKeys.filter((key) => studiedLessonKeys.has(key)).length
+    : studyGuideProgress.studiedTopics.length;
+  const practisedLessonCount = syllabusLessonKeys.length
+    ? syllabusLessonKeys.filter((key) => practisedLessonKeys.has(key)).length
+    : attempts.filter((attempt) => attempt.testType === "Practice Test").length;
+  const mockReady =
+    studiedLessonCount === totalSyllabusLessons &&
+    practisedLessonCount === totalSyllabusLessons;
+  const mockReadinessLabel = mockReady
+    ? "Ready for full mock"
+    : `${studiedLessonCount}/${totalSyllabusLessons} study guide lessons and ${practisedLessonCount}/${totalSyllabusLessons} practice tests completed`;
+  const completedPercent = Math.min(100, statistics.currentStudyStreak * 12 + statistics.totalTests * 4);
+  const mockReadiness = Math.round(
+    ((studiedLessonCount + practisedLessonCount) / (totalSyllabusLessons * 2)) * 100
+  );
+  const preparationMode =
+    mockReadiness >= 90
+      ? "Final Push Mode"
+      : mockReadiness >= 70
+        ? "Exam Prep Mode"
+        : mockReadiness >= 35
+          ? "Improvement Mode"
+          : "Foundation Mode";
+  const parentRulesSummary = `${parentSchedule.parentApprovalRequired ? "Approval required" : "Approval not required"} • ${parentSchedule.minimumStudyDaysWeekly || 5} days weekly • ${parentSchedule.minimumDailyMinutes || parentSchedule.dailyMinutes} mins daily`;
+  const hasParentControls = userPackage === "elite" || Boolean(studentSession?.school_id);
+  const parentInsights = getEliteParentInsights(parentSchedule, attempts);
+  const reportSettingsSummary = [
+    parentNotificationPreferences?.receiveWeeklyReport ? "Weekly report enabled" : "Weekly report off",
+    parentNotificationPreferences?.receiveDailyReport ? "Daily report enabled" : "Daily report off",
+    parentNotificationPreferences?.enableEmailAlerts ? "Email alerts enabled" : null,
+    parentNotificationPreferences?.enableParentDashboard ? "Parent dashboard enabled" : null,
+  ].filter(Boolean).join(" • ");
+  const accountabilitySummary =
+    parentInsights.mockCompletionTracking.includes("0/") && statistics.totalTests === 0
+      ? "No session completed today"
+      : parentInsights.missedSessionAlerts.includes("enabled")
+        ? "Missed-session alerts enabled"
+        : "Activity tracking active";
+  const mandatoryTopicSummary = parentSchedule.mandatoryTopics?.length
+    ? parentSchedule.mandatoryTopics.join(", ")
+    : "No mandatory topics selected";
+  const dayScheduleRows = buildScheduleForDays(plan.studyDays, plan.dayTopicSchedule, plan);
+  const isSectionOpen = (sectionId) => openSections.has(sectionId);
+  const toggleSection = (sectionId) => {
+    setOpenSections((current) => {
+      const next = new Set(current);
+      if (next.has(sectionId)) {
+        next.delete(sectionId);
+      } else {
+        next.add(sectionId);
+      }
+
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    let active = true;
+
+    const loadBackendStudyPlan = async () => {
+      const [backendPlan, backendParentSchedule] = await Promise.all([
+        loadStudyPlanFromBackend(),
+        loadParentScheduleFromBackend(),
+      ]);
+      const loadedNotificationPreferences = await loadParentNotificationPreferences();
+      const loadedInvite = await getOrCreateParentDashboardInvite(getStudentDisplayName(studentSession));
+      const parentTimetable = await loadParentTimetableForChild();
+
+      if (!active) return;
+
+      if (backendPlan) {
+        setPlan((current) => ({ ...current, ...backendPlan }));
+        setIsEditingPlan(!backendPlan.customized);
+      }
+      if (parentTimetable?.timetable?.length && parentTimetable.locked) {
+        setPlan((current) => convertParentTimetableToPlan({ ...current, ...(backendPlan || {}) }, parentTimetable));
+        setParentPlanLock(true);
+        setIsEditingPlan(false);
+      } else {
+        setParentPlanLock(false);
+      }
+      if (backendParentSchedule) {
+        setParentSchedule((current) => ({ ...current, ...backendParentSchedule }));
+      }
+      setParentNotificationPreferences(loadedNotificationPreferences);
+      setParentInvite(loadedInvite);
+    };
+
+    loadBackendStudyPlan();
+
+    return () => {
+      active = false;
+    };
+  }, [studentSession]);
+
+  useEffect(() => {
+    if (!hasParentControls) return undefined;
+
+    let active = true;
+    const syncParentTimetable = async () => {
+      const parentTimetable = await loadParentTimetableForChild();
+      if (!active) return;
+
+      if (parentTimetable?.timetable?.length && parentTimetable.locked) {
+        setPlan((current) => convertParentTimetableToPlan(current, parentTimetable));
+        setParentPlanLock(true);
+        setIsEditingPlan(false);
+      } else {
+        setParentPlanLock(false);
+      }
+    };
+
+    const timer = window.setInterval(syncParentTimetable, 15000);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+    };
+  }, [hasParentControls]);
+
+  useEffect(() => {
+    const checkStudyReminder = () => {
+      const now = new Date();
+      const today = getCurrentWeekDay();
+      const todayEntry = autoGeneratedPlan.find((item) => item.day === today);
+
+      if (!todayEntry?.reminderEnabled || !todayEntry.preferredStartTime) return;
+
+      const [hours, minutes] = todayEntry.preferredStartTime.split(":").map(Number);
+      const startTime = new Date(now);
+      startTime.setHours(hours || 0, minutes || 0, 0, 0);
+
+      const reminderTime = new Date(startTime);
+      const leadMinutes = Number(todayEntry.reminderLeadMinutes ?? plan.reminderLeadMinutes ?? 5);
+      reminderTime.setMinutes(startTime.getMinutes() - leadMinutes);
+
+      const alertKey = `${todayEntry.day}-${todayEntry.preferredStartTime}-${leadMinutes}-${now.toDateString()}`;
+      const message = `Today's Study Plan: ${todayEntry.day} is for ${formatTopicList(todayEntry.topics)}. Start with the Study Guide.`;
+
+      if (now >= reminderTime) {
+        setStudyReminder({ message, plan: todayEntry, isLate: now > startTime });
+      }
+
+      if (now >= reminderTime && now <= startTime && reminderAlertedRef.current !== alertKey) {
+        reminderAlertedRef.current = alertKey;
+        window.alert(message);
+        trackChildActivityEvent("student_lesson_reminder_due", {
+          topics: todayEntry.topics,
+          metadata: {
+            childName: "Your child",
+            day: todayEntry.day,
+            startTime: todayEntry.preferredStartTime,
+            reminderLeadMinutes: leadMinutes,
+            audience: "student",
+          },
+        });
+      }
+    };
+
+    checkStudyReminder();
+    const reminderTimer = window.setInterval(checkStudyReminder, 30000);
+
+    return () => window.clearInterval(reminderTimer);
+  }, [autoGeneratedPlan, plan.reminderLeadMinutes]);
+
+  const updatePlan = (updates) =>
+    setPlan((current) => ({
+      ...current,
+      ...(typeof updates === "function" ? updates(current) : updates),
+    }));
+
+  const toggleStudyDay = (day) => {
+    updatePlan((current) => {
+      const studyDays = current.studyDays.includes(day)
+        ? current.studyDays.filter((item) => item !== day)
+        : [...current.studyDays, day];
+
+      return {
+        studyDays,
+        dayTopicSchedule: buildScheduleForDays(studyDays, current.dayTopicSchedule, current),
+      };
+    });
+  };
+
+  const updateDayTopicSchedule = (day, updates) => {
+    updatePlan((current) => {
+      const entry = getScheduleEntry(current.dayTopicSchedule, day, current);
+      const dayTopicSchedule = buildScheduleForDays(
+        current.studyDays,
+        [
+          ...(current.dayTopicSchedule || []).filter((item) => item.day !== day),
+          {
+            ...entry,
+            ...updates,
+          },
+        ],
+        current
+      );
+
+      return { dayTopicSchedule };
+    });
+  };
+
+  const toggleScheduleTopic = (day, topic) => {
+    const entry = getScheduleEntry(plan.dayTopicSchedule, day, plan);
+    const topics = entry.topics.includes(topic)
+      ? entry.topics.filter((item) => item !== topic)
+      : [...entry.topics, topic];
+
+    updateDayTopicSchedule(day, { topics });
+  };
+
+  const handleSave = () => {
+    const savedPlan = saveStudyPlan({
+      ...plan,
+      autoGeneratedPlan,
+      customized: true,
+    });
+
+    setPlan(savedPlan);
+    setIsEditingPlan(false);
+    syncStudyPlanToBackend(savedPlan);
+  };
+
+  const handlePlanButton = () => {
+    if (parentPlanLock) return;
+
+    if (!isEditingPlan) {
+      setIsEditingPlan(true);
+      return;
+    }
+
+    handleSave();
+  };
+
+  const startTodayStudySession = () => {
+    const topics = todayPlan?.topics || [];
+    const childName = getStudentDisplayName(studentSession);
+    beginTrackedStudySession({ topics, childName, sessionArea: "study plan" });
+    trackChildActivityEvent("session_started", {
+      topics,
+      metadata: { childName, sessionArea: "study plan" },
+    });
+    onStudyGuide();
+  };
+
+  const renderDayTopicSchedule = ({ rows, onTopicToggle, onEntryUpdate, isParent = false, readOnly = false }) => (
+    <div className="day-topic-schedule">
+      <div className="day-topic-header" aria-hidden="true">
+        <span>Day</span>
+        <span>Topics</span>
+        <span>Duration</span>
+        <span>Reminder Time</span>
+      </div>
+      {rows.map((entry) => (
+        <div className="day-topic-row" key={`${isParent ? "parent" : "student"}-${entry.day}`}>
+          <div className="day-topic-day">
+            <strong>{entry.day}</strong>
+            <span>{entry.topics.length} topic{entry.topics.length === 1 ? "" : "s"}</span>
+          </div>
+          <div className="day-topic-cell">
+            <span className="mobile-field-label">Topics</span>
+            <div className="day-topic-chip-grid">
+              {TOPIC_NAMES.map((topic) => (
+                <button
+                  key={`${entry.day}-${topic}`}
+                  className={entry.topics.includes(topic) ? "selected" : ""}
+                  disabled={readOnly}
+                  onClick={() => onTopicToggle(entry.day, topic)}
+                >
+                  {topic}
+                </button>
+              ))}
+            </div>
+          </div>
+          <label className="day-topic-input">
+            <span>Duration</span>
+            <select
+              value={entry.duration}
+              disabled={readOnly}
+              onChange={(event) => onEntryUpdate(entry.day, { duration: Number(event.target.value) })}
+            >
+              {DURATION_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
+          </label>
+          <div className="day-topic-reminder">
+            <label className="day-topic-input">
+              <span>Reminder Time</span>
+              <input
+                type="time"
+                value={entry.preferredStartTime}
+                disabled={readOnly}
+                onChange={(event) => onEntryUpdate(entry.day, { preferredStartTime: event.target.value })}
+              />
+            </label>
+            <label className="day-topic-input">
+              <span>Alert Lead Time</span>
+              <select
+                value={entry.reminderLeadMinutes}
+                disabled={readOnly}
+                onChange={(event) => onEntryUpdate(entry.day, { reminderLeadMinutes: Number(event.target.value) })}
+              >
+                {REMINDER_LEAD_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+              </select>
+            </label>
+            <label className="study-reminder-toggle day-reminder-toggle">
+              <input
+                type="checkbox"
+                checked={entry.reminderEnabled}
+                disabled={readOnly}
+                onChange={(event) => onEntryUpdate(entry.day, { reminderEnabled: event.target.checked })}
+              />
+              Enable reminder
+            </label>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  const renderParentStyleTimetable = ({ rows, readOnly }) => (
+    <div className="student-parent-style-timetable">
+      {WEEK_DAYS.map((day) => {
+        const entry = rows.find((row) => row.day === day) || getScheduleEntry(rows, day, plan);
+        const enabled = plan.studyDays.includes(day);
+        return (
+          <div className={`parent-timetable-row ${enabled ? "" : "disabled"}`} key={`student-editor-${day}`}>
+            <div className="parent-day-badge">{day.slice(0, 3)}</div>
+            <label className="parent-switch" aria-label={`${day} enabled`}>
+              <input type="checkbox" checked={enabled} disabled={readOnly} onChange={() => toggleStudyDay(day)} />
+              <b />
+            </label>
+            <label className="parent-timetable-field">
+              <span>Start</span>
+              <input
+                type="time"
+                value={entry.preferredStartTime}
+                disabled={readOnly || !enabled}
+                onChange={(event) => updateDayTopicSchedule(day, { preferredStartTime: event.target.value })}
+              />
+            </label>
+            <label className="parent-timetable-field">
+              <span>Duration</span>
+              <select
+                value={entry.duration}
+                disabled={readOnly || !enabled}
+                onChange={(event) => updateDayTopicSchedule(day, { duration: Number(event.target.value) })}
+              >
+                {DURATION_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <label className="parent-timetable-field">
+              <span>Reminder</span>
+              <select
+                value={entry.reminderLeadMinutes}
+                disabled={readOnly || !enabled}
+                onChange={(event) => updateDayTopicSchedule(day, { reminderLeadMinutes: Number(event.target.value), reminderEnabled: true })}
+              >
+                {REMINDER_LEAD_OPTIONS.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+              </select>
+            </label>
+            <div className="parent-topic-summary">
+              <strong>{entry.topics?.length ? entry.topics.join(", ") : "No topic selected"}</strong>
+              <span>{enabled ? "Scheduled study day" : "Off schedule"}</span>
+            </div>
+            <div className="parent-topic-picker">
+              {TOPIC_NAMES.map((topic) => (
+                <button
+                  key={`${day}-${topic}`}
+                  type="button"
+                  className={entry.topics?.includes(topic) ? "selected" : ""}
+                  disabled={readOnly || !enabled}
+                  onClick={() => toggleScheduleTopic(day, topic)}
+                >
+                  {topic}
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  if (isEditorPageOpen && userPackage !== "free") {
+    const readOnlyEditor = parentPlanLock || !isEditingPlan;
+    return (
+      <main className="page-shell syllabus-page student-plan-editor-page">
+        {React.createElement(HeaderComponent, {
+          title: "Plan Editor",
+          onBack: () => setIsEditorPageOpen(false),
+          onPrevious: () => setIsEditorPageOpen(false),
+          onNext,
+        })}
+
+        <section className="premium-panel student-plan-editor-hero">
+          <div>
+            <span className="result-eyebrow">{parentPlanLock ? "Parent locked timetable" : "Parent / Student editor"}</span>
+            <h1>Weekly Study Timetable</h1>
+            <p>
+              {parentPlanLock
+                ? "This timetable was locked from the parent portal. The learner can follow it here, but edits are controlled by the parent."
+                : "Choose study days, lesson time, duration, topics and reminder lead time in one dedicated workspace."}
+            </p>
+          </div>
+          <div className="student-plan-editor-actions">
+            <span className={`performance-pill ${parentPlanLock ? "improving" : "strong"}`}>
+              {parentPlanLock ? "Locked by Parent" : isEditingPlan ? "Editing" : "Saved"}
+            </span>
+            <button className="primary-button compact-button" disabled={parentPlanLock} onClick={handlePlanButton}>
+              {parentPlanLock ? "Locked" : isEditingPlan ? "Save Plan" : "Edit Plan"}
+            </button>
+          </div>
+        </section>
+
+        <section className="premium-panel student-timetable-toolbar">
+          <label>
+            Daily Minutes
+            <input
+              type="number"
+              min="20"
+              max="180"
+              value={plan.dailyMinutes}
+              disabled={readOnlyEditor || !access.canCustomizeMinutes}
+              onChange={(event) => updatePlan({ dailyMinutes: Number(event.target.value) })}
+            />
+          </label>
+          <label>
+            Mock Frequency / Week
+            <select
+              value={plan.mockFrequencyPerWeek}
+              disabled={readOnlyEditor || !access.canCustomizeMockFrequency}
+              onChange={(event) => updatePlan({ mockFrequencyPerWeek: Number(event.target.value) })}
+            >
+              {[0, 1, 2, 3].map((count) => <option key={count} value={count}>{count}</option>)}
+            </select>
+          </label>
+          <label className="study-reminder-toggle">
+            <input
+              type="checkbox"
+              checked={plan.reminderEnabled}
+              disabled={readOnlyEditor}
+              onChange={(event) => updatePlan({ reminderEnabled: event.target.checked })}
+            />
+            Study reminders
+          </label>
+        </section>
+
+        {parentPlanLock && (
+          <div className="auth-message">
+            Parent timetable is locked. The timetable below is synced from the parent app and cannot be edited here.
+          </div>
+        )}
+
+        {userPackage === "standard" && !parentPlanLock && (
+          <div className="auth-message">
+            Standard reminder emails are limited to one lesson reminder per scheduled day, sent to the registered parent email.
+          </div>
+        )}
+
+        {renderParentStyleTimetable({ rows: dayScheduleRows, readOnly: readOnlyEditor })}
+      </main>
+    );
+  }
+
+  return (
+    <main className="page-shell syllabus-page">
+      {React.createElement(HeaderComponent, {
+        title: "Study Plan",
+        onBack,
+        onPrevious,
+        onNext,
+      })}
+
+      <section className="study-plan-hero premium-panel">
+        <div>
+          <span className="result-eyebrow">{userPackage} study coach</span>
+          <h1>Common Entrance Success Plan</h1>
+          <p>Smart weekly preparation plan for strong Common Entrance performance.</p>
+        </div>
+        <div className="study-plan-score">
+          <strong>{readinessLabel(statistics.averageScore)}</strong>
+          <span>Weekly goal: {plan.studyDays.length} days • {plan.dailyMinutes} mins/day</span>
+        </div>
+      </section>
+
+      {studyReminder && (
+        <section className={`premium-panel study-reminder-card ${studyReminder.isLate ? "late" : ""}`}>
+          <div>
+            <span className="result-eyebrow">Study Reminder</span>
+            <h2>{studyReminder.plan.day}'s Plan</h2>
+          </div>
+          <p>{studyReminder.message}</p>
+          <button className="secondary-button compact-button" onClick={() => setStudyReminder(null)}>
+            Dismiss
+          </button>
+        </section>
+      )}
+
+      <section className="premium-panel today-focus-card">
+        <div className="section-heading-row">
+          <div>
+            <span className="result-eyebrow">Today's Study Focus</span>
+            <h2>
+              {todayPlan?.day === currentWeekDay
+                ? formatTopicList(todayPlan?.topics)
+                : "No topic scheduled today"}
+            </h2>
+          </div>
+          <span className={`performance-pill ${mockReady ? "strong" : "improving"}`}>
+            {todayPlan?.status || "Today"}
+          </span>
+        </div>
+        <p>
+          {todayPlan?.day === currentWeekDay
+            ? todayPlan.task
+            : "Choose today in your schedule below if you want this card to show a focused plan for today."}
+        </p>
+        <div className="learning-flow-list" aria-label="Today's learning flow">
+          {(todayPlan?.flow || ["Study Guide", "Practice Topic", "Review Mistakes"]).map((step, stepIndex) => (
+            <span key={step}>
+              {stepIndex + 1}. {step}
+            </span>
+          ))}
+        </div>
+        <small>{todayPlan?.duration || plan.dailyMinutes} minutes - {todayPlan?.readinessNote || readinessLabel(statistics.averageScore)}</small>
+        <div className="study-flow-actions">
+          <button className="primary-button compact-button" onClick={startTodayStudySession}>
+            Start Study Guide
+          </button>
+          <button className="secondary-button compact-button" onClick={onPracticeTopic}>
+            Practice Topic
+          </button>
+          <button
+            className="secondary-button compact-button"
+            onClick={() => {
+              trackChildActivityEvent("mistakes_reviewed", {
+                topics: todayPlan?.topics || [],
+              });
+              onReviewResults();
+            }}
+          >
+            Review Results
+          </button>
+        </div>
+      </section>
+
+      <StudyPlanDisclosure
+        id="weekly-plan"
+        eyebrow="Weekly Topic Plan"
+        title="Study Before Mock"
+        summary={`${autoGeneratedPlan.length} study days planned`}
+        isOpen={isSectionOpen("weekly-plan")}
+        onToggle={toggleSection}
+      >
+        <div className="study-roadmap-grid">
+          {autoGeneratedPlan.map((item) => (
+            <article key={`${item.day}-${item.topic}`} className="study-roadmap-card">
+              <span>{item.day}</span>
+              <h3>{formatTopicList(item.topics)}</h3>
+              <p>{item.duration} minutes - {item.status}</p>
+              <small>
+                {item.reminderEnabled
+                  ? `Reminder ${item.preferredStartTime} (${item.reminderLeadMinutes} mins before)`
+                  : "Reminder off"}
+              </small>
+            </article>
+          ))}
+        </div>
+      </StudyPlanDisclosure>
+
+      <StudyPlanDisclosure
+        id="mock-readiness"
+        eyebrow="Mock Readiness"
+        title={mockReady ? "Ready for Full Mock" : "Topic Coverage Needed"}
+        summary={mockReadinessLabel}
+        isOpen={isSectionOpen("mock-readiness")}
+        onToggle={toggleSection}
+      >
+        <div className="mock-readiness-card">
+          <div>
+            <h2>{mockReadinessLabel}</h2>
+            <p>
+              Full mock combines the full syllabus. It becomes recommended only after the learner
+              has studied every Study Guide subtopic and completed every matching practice test.
+            </p>
+          </div>
+          <div className="study-plan-score">
+            <strong>{mockReady ? "Mock Ready" : "Topic Coverage Needed"}</strong>
+            <span>
+              Study guide {studiedLessonCount}/{totalSyllabusLessons} - Practice {practisedLessonCount}/{totalSyllabusLessons}
+            </span>
+            <button
+              className="primary-button compact-button"
+              disabled={!mockReady}
+              onClick={onStartMock}
+            >
+              Start Full Mock
+            </button>
+          </div>
+        </div>
+      </StudyPlanDisclosure>
+
+      {userPackage === "free" && (
+        <StudyPlanDisclosure
+          id="free-plan-settings"
+          eyebrow="Free Plan Settings"
+          title="Choose Your Study Days"
+          summary="Basic schedule preference"
+          isOpen={isSectionOpen("free-plan-settings")}
+          onToggle={toggleSection}
+        >
+          <div className="section-heading-row">
+            <div>
+              <span className="result-eyebrow">Free Plan Settings</span>
+              <h2>Choose Your Study Days</h2>
+            </div>
+            <button className="primary-button compact-button" onClick={handlePlanButton}>
+              {isEditingPlan ? "Save Days" : "Edit Days"}
+            </button>
+          </div>
+          <p className="selector-note">
+            Your weekly topics are generated automatically from your recent performance. Upgrade to
+            Standard to choose topics per day, set reminders and customize duration.
+          </p>
+          <div className="selector-panel">
+            <strong>Preferred Study Days</strong>
+            <div className="chip-grid">
+              {WEEK_DAYS.map((day) => (
+                <button
+                  key={day}
+                  className={plan.studyDays.includes(day) ? "selected" : ""}
+                  disabled={!isEditingPlan}
+                  onClick={() => toggleStudyDay(day)}
+                >
+                  {day}
+                </button>
+              ))}
+            </div>
+          </div>
+        </StudyPlanDisclosure>
+      )}
+
+      {userPackage !== "free" && (
+        <section className="premium-panel study-plan-editor-entry">
+          <div className="section-heading-row">
+            <div>
+              <span className="result-eyebrow">Custom Plan</span>
+              <h2>Parent / Student Plan Editor</h2>
+              <p>Open a dedicated timetable workspace designed like the parent timetable, with the student app look and background.</p>
+            </div>
+            <button className="primary-button compact-button" onClick={() => setIsEditorPageOpen(true)}>
+              Open Editor
+            </button>
+          </div>
+          <div className="elite-insight-grid">
+            <InsightCard title="Timetable Status" value={parentPlanLock ? "Locked by parent" : "Editable by student"} />
+            <InsightCard title="Study Days" value={`${plan.studyDays.length} scheduled`} />
+            <InsightCard title="Reminder Rule" value={userPackage === "standard" ? "One email per scheduled day" : "Parent-controlled alerts"} />
+          </div>
+        </section>
+      )}
+
+      <StudyPlanDisclosure
+        id="progress-focus"
+        eyebrow="Progress"
+        title={userPackage === "free" ? "Progress Tracker" : "Weak Areas & Progress"}
+        summary={`${mockReadiness}% mock readiness`}
+        isOpen={isSectionOpen("progress-focus")}
+        onToggle={toggleSection}
+      >
+      <div className="study-plan-columns">
+        {userPackage !== "free" && (
+          <article className="premium-panel">
+            <span className="result-eyebrow">Weak Areas Focus</span>
+            <h2>Recommended Focus</h2>
+            <div className="weak-area-list">
+              {(weakTopics.length ? weakTopics : TOPIC_NAMES.slice(0, 3).map((topic) => ({ topic, percentage: 0 }))).map((topic) => (
+                <div className="study-weak-card" key={topic.topic}>
+                  <strong>{topic.topic}</strong>
+                  <span>{topic.percentage}% mastery</span>
+                  <button className="secondary-button compact-button" onClick={onPracticeTopic}>
+                    Practice Topic
+                  </button>
+                </div>
+              ))}
+            </div>
+          </article>
+        )}
+
+        <article className="premium-panel">
+          <span className="result-eyebrow">Progress Tracker</span>
+          <h2>Weekly Pulse</h2>
+          <div className="study-progress-list">
+            <ProgressItem label="Weekly completion" value={completedPercent} />
+            <ProgressItem label="Mock readiness" value={mockReadiness} />
+            <ProgressItem label="Topic mastery" value={statistics.averageScore} />
+            <ProgressItem label="Study streak" value={Math.min(100, statistics.currentStudyStreak * 14)} suffix={`${statistics.currentStudyStreak} days`} />
+          </div>
+        </article>
+      </div>
+      </StudyPlanDisclosure>
+
+      {userPackage === "free" && (
+        <StudyPlanDisclosure
+          id="standard-upgrade"
+          eyebrow="Upgrade"
+          title="Advanced Custom Planning Locked"
+          summary="Standard unlocks editable planning"
+          isOpen={isSectionOpen("standard-upgrade")}
+          onToggle={toggleSection}
+        >
+          <LockedFeatureCard
+            title="Advanced Custom Planning Locked"
+            message="Upgrade to Standard to choose topics per day, set study duration, enable reminders and unlock weak-area focus."
+          />
+        </StudyPlanDisclosure>
+      )}
+
+      {!hasParentControls && (
+        <StudyPlanDisclosure
+          id="elite-upgrade"
+          eyebrow="Upgrade"
+          title="Parent Coach Tools Locked"
+          summary="Personal accounts use Elite for parent controls"
+          isOpen={isSectionOpen("elite-upgrade")}
+          onToggle={toggleSection}
+        >
+          <LockedFeatureCard
+            title="Parent Coach Tools Locked"
+            message="School learners inherit parent controls from the school's subscription. Personal accounts can upgrade to Elite to unlock parent scheduling, weekly reports, intensive mode, accountability and readiness scoring."
+          />
+        </StudyPlanDisclosure>
+      )}
+
+      {hasParentControls && (
+        <>
+          <StudyPlanDisclosure
+            id="parent-access"
+            eyebrow={studentSession?.school_id ? "School Parent Controls" : "Elite Parent Controls"}
+            title="Parental Control"
+            summary={parentPlanLock ? "Parent timetable locked" : "Scan QR to manage parent rules, timetable and alerts"}
+            isOpen={isSectionOpen("parent-access")}
+            onToggle={toggleSection}
+          >
+            <div className="elite-insight-grid">
+              <InsightCard title="Parent Rules" value={parentRulesSummary} />
+              <InsightCard title="Report Settings" value={reportSettingsSummary || "Reports not enabled"} />
+              <InsightCard title="Mandatory Topics" value={mandatoryTopicSummary} />
+              <InsightCard title="Plan Lock" value={parentPlanLock ? "Locked by parent" : "Unlocked"} />
+            </div>
+
+            {parentInvite?.inviteUrl && (
+              <div className="parent-qr-card">
+                <div>
+                  <span className="result-eyebrow">Parent Dashboard QR</span>
+                  <h3>Scan to manage parent controls</h3>
+                  <p>
+                    Parent should scan this code on their own phone. The dashboard lets them set rules,
+                    lock the timetable, choose email alerts and monitor study activity.
+                  </p>
+                </div>
+                <img
+                  alt="Parent dashboard QR code"
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(parentInvite.inviteUrl)}`}
+                />
+              </div>
+            )}
+          </StudyPlanDisclosure>
+
+          <StudyPlanDisclosure
+            id="elite-insights"
+            eyebrow="Elite Insights"
+            title="Advanced Readiness Tools"
+            summary="Reports, accountability and readiness score"
+            isOpen={isSectionOpen("elite-insights")}
+            onToggle={toggleSection}
+          >
+            <div className="elite-insight-grid">
+              <InsightCard title="Parent Rules" value={parentRulesSummary} />
+              <InsightCard title="Report Settings" value={reportSettingsSummary || "Reports not enabled"} />
+              <InsightCard title="Common Entrance Intensive" value={preparationMode} />
+              <InsightCard title="Mandatory Topics" value={mandatoryTopicSummary} />
+              <InsightCard title="Child Accountability" value={accountabilitySummary} />
+              <InsightCard title="Syllabus Readiness" value={`${mockReadiness}% complete`} />
+            </div>
+          </StudyPlanDisclosure>
+        </>
+      )}
+
+      {onTutorHelp && <NeedTutorCard onClick={onTutorHelp} />}
+    </main>
+  );
+}
+
+function getStudentDisplayName(studentSession) {
+  return [studentSession?.studentFirstName, studentSession?.studentLastName]
+    .filter(Boolean)
+    .join(" ")
+    .trim() || studentSession?.username || "Your child";
+}
+
+function StudyPlanDisclosure({ id, eyebrow, title, summary, isOpen, onToggle, children }) {
+  return (
+    <section className={`premium-panel study-plan-disclosure ${isOpen ? "open" : ""}`}>
+      <button
+        type="button"
+        className="study-plan-disclosure-toggle"
+        onClick={() => onToggle(id)}
+        aria-expanded={isOpen}
+      >
+        <span>
+          <small className="result-eyebrow">{eyebrow}</small>
+          <strong>{title}</strong>
+          {summary && <em>{summary}</em>}
+        </span>
+        <b>{isOpen ? "Close" : "Open"}</b>
+      </button>
+      {isOpen && <div className="study-plan-disclosure-body">{children}</div>}
+    </section>
+  );
+}
+
+function ProgressItem({ label, value, suffix }) {
+  return (
+    <div>
+      <span>{label}</span>
+      <strong>{suffix || `${value}%`}</strong>
+      <div className="topic-progress-track">
+        <div style={{ width: `${Math.min(value, 100)}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function InsightCard({ title, value }) {
+  return (
+    <article className="premium-panel insight-card">
+      <span>{title}</span>
+      <strong>{value}</strong>
+    </article>
+  );
+}
+
+function PreferenceToggle({ label, checked, disabled = false, onChange }) {
+  return (
+    <label className="monitoring-toggle">
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span>{label}</span>
+    </label>
+  );
+}
